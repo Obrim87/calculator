@@ -5,30 +5,32 @@
 html, body {
     margin: 0;
     padding: 0;
+    background: black;
+    font-family: Poppins;
 }
 
-h1 {
+.calculator {
+    width: 450px;
+    margin-top: 25vh;
     margin-left: auto;
     margin-right: auto;
-    width: 600px;
-    text-align: center;
 }
 
 .displayWindow {
-    width: 600px;
-    height: 50px;
-    border: solid 2px black;
-    margin: auto;
-    font-size: 40px;
+    width: inherit;
+    height: 100px;
+    font-weight: 300;
+    padding-right: 20px;
+    color: #f5f5f5;
+    font-size: 70px;
     text-align: right;
 }
 
 .container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 3px;
-    width: 600px;
-    margin: auto;
+    gap: 10px;
+    width: inherit;
 }
 
 .container div {
@@ -39,21 +41,31 @@ h1 {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 50px;
+    background: #313131;
+    color: #f5f6f6;
+    
+    font-size: 45px;
+}
+
+.clearBtn, .backspaceBtn {
+    background: #9f9f9f !important;
+    color: black !important;
+}
+
+.divideBtn, .multiplyBtn, .subtractBtn, .additionBtn, .equalsBtn {
+    background: #f69906 !important;
 }
 
 .clearBtn {
-    grid-area: 1/1/2/4;
+    grid-area: 1/1/2/3;
 }
 
 .zeroBtn {
     grid-area: 5/1/6/3;
 }
 
-.container div:hover {
-    background: lightgrey;
-}
-
 .container div:active {
-    background: white;
+    background: lightgrey !important;
 }
 

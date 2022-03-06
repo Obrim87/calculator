@@ -14,7 +14,36 @@ const divide = function(a,b) {
   return a / b;
 };
 
-let displayWindow = document.querySelector('.displayWindow');
+function operate(operator) {
+  if (operator === '+') {
+    output = add(firstInput, secondInput);
+    updateDisplay();
+  } else if (operator === '-') {
+    output = subtract(firstInput, secondInput);
+    updateDisplay();
+  } else if (operator === '*') {
+    output = multiply(firstInput, secondInput);
+    updateDisplay();
+  } else if (operator === '/') {
+    if (secondInput == 0) {
+      output = 'ERROR';
+    } else {
+    output = divide(firstInput, secondInput);
+    updateDisplay();
+    }
+  }
+}
+
+function updateDisplay() {
+  let disp = output.toString();
+  if(disp.length > 9) {
+    display.textContent = disp.substring(0, 9);
+  } else {
+    display.textContent = disp;
+  }
+}
+
+let display = document.querySelector('.displayWindow');
 let firstInput;
 let secondInput;
 let output;
@@ -34,131 +63,150 @@ let addition = document.querySelector('.additionBtn');
 let division = document.querySelector('.divideBtn');
 let multiplication = document.querySelector('.multiplyBtn');
 let subtraction = document.querySelector('.subtractBtn');
+let decimal = document.querySelector('.decimalBtn');
+let backspace = document.querySelector('.backspaceBtn');
 let mathOperator;
 let equals = document.querySelector('.equalsBtn');
 
 clear.addEventListener('click', () => {
-  displayWindow.textContent = '';
+  output = '';
+  updateDisplay();
   number = [];
   firstInput = null;
   secondInput = null;
   mathOperator = null;
 });
 
+backspace.addEventListener('click', () => {
+  number.pop();
+  display.textContent = number.join('');
+})
+
 one.addEventListener('click', () => {
   number.push(1);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 two.addEventListener('click', () => {
   number.push(2);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 three.addEventListener('click', () => {
   number.push(3);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 four.addEventListener('click', () => {
   number.push(4);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 five.addEventListener('click', () => {
   number.push(5);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 six.addEventListener('click', () => {
   number.push(6);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 seven.addEventListener('click', () => {
   number.push(7);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 eight.addEventListener('click', () => {
   number.push(8);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 nine.addEventListener('click', () => {
   number.push(9);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
 })
 
 zero.addEventListener('click', () => {
   number.push(0);
-  displayWindow.textContent = number.join('');
+  display.textContent = number.join('');
+})
+
+decimal.addEventListener('click', () => {
+  if (!number.includes('.')) {
+    number.push('.');
+    display.textContent = number.join('');
+  }
 })
 
 addition.addEventListener('click', () => {
-  mathOperator = '+'
   if (firstInput == null || firstInput == undefined) {
-    firstInput = number.join('');
-    firstInput = Number(firstInput);
+    mathOperator = '+';
+    firstInput = Number(number.join(''));
   } else {
-    secondInput = number.join('');
-    secondInput = Number(secondInput);
+    secondInput = Number(number.join(''));
+    operate(mathOperator);
+    updateDisplay();
+    mathOperator = '+';
+    firstInput = output;
   }
   number = [];
 });
 
 division.addEventListener('click', () => {
-  mathOperator = '/'
   if (firstInput == null || firstInput == undefined) {
-    firstInput = number.join('');
-    firstInput = Number(firstInput);
+    mathOperator = '/';
+    firstInput = Number(number.join(''));
+  } else if (mathOperator == '=') {
+    mathOperator = '/';
   } else {
-    secondInput = number.join('');
-    secondInput = Number(secondInput);
+    
+    secondInput = Number(number.join(''));
+    operate(mathOperator);
+    updateDisplay();
+    mathOperator = '/';
+    firstInput = output;
   }
   number = [];
 });
 
 subtraction.addEventListener('click', () => {
-  mathOperator = '-'
   if (firstInput == null || firstInput == undefined) {
-    firstInput = number.join('');
-    firstInput = Number(firstInput);
+    mathOperator = '-';
+    firstInput = Number(number.join(''));
   } else {
-    secondInput = number.join('');
-    secondInput = Number(secondInput);
+    secondInput = Number(number.join(''));
+    operate(mathOperator);
+    updateDisplay();
+    mathOperator = '-';
+    firstInput = output;
   }
   number = [];
 });
 
 multiplication.addEventListener('click', () => {
-  mathOperator = '*'
   if (firstInput == null || firstInput == undefined) {
-    firstInput = number.join('');
-    firstInput = Number(firstInput);
+    mathOperator = '*';
+    firstInput = Number(number.join(''));
+  } else if (mathOperator == '=') {
+    mathOperator = '*';
   } else {
-    secondInput = number.join('');
-    secondInput = Number(secondInput);
+    
+    secondInput = Number(number.join(''));
+    operate(mathOperator);
+    updateDisplay();
+    mathOperator = '*';
+    firstInput = output;
   }
   number = [];
 });
 
 equals.addEventListener('click', () => {
-  secondInput = number.join('');
-  secondInput = Number(secondInput);
-  number = [];
-  if (mathOperator === '+') {
-    output = add(firstInput, secondInput);
-    displayWindow.textContent = output;
-  } else if (mathOperator === '-') {
-    output = subtract(firstInput, secondInput);
-    displayWindow.textContent = output;
-  } else if (mathOperator === '*') {
-    output = multiply(firstInput, secondInput);
-    displayWindow.textContent = output;
-  } else if (mathOperator === '/') {
-    output = divide(firstInput, secondInput);
-    displayWindow.textContent = output;
+  if (firstInput != undefined) {
+    secondInput = Number(number.join(''));
+    operate(mathOperator);
+    mathOperator = '=';
+    number = [];
+    firstInput = output;
   }
-  firstInput = output;
-})
+});
